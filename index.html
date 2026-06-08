@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="AI Hành Chính - Tra cứu luật Việt Nam chính xác, soạn công văn chuẩn thể thức trong 30 giây. Dành riêng cho Pháp chế và Kế toán doanh nghiệp."/>
+  <meta name="keywords" content="AI pháp chế, AI kế toán, tra cứu luật Việt Nam, soạn công văn, AI hành chính, công cụ pháp lý"/>
+  <title>AI Hành Chính — Trợ lý Pháp chế & Kế toán Thông minh</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #1e40af;
+      --primary-dark: #1e3a8a;
+      --primary-light: #dbeafe;
+      --accent: #f59e0b;
+      --accent-dark: #d97706;
+      --green: #16a34a;
+      --red: #dc2626;
+      --text: #1e293b;
+      --muted: #64748b;
+      --bg: #f8fafc;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --shadow: 0 4px 24px rgba(30,64,175,0.10);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+
+    /* ── NAVIGATION ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 17px; font-weight: 800; color: var(--primary);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-cta {
+      background: var(--primary); color: var(--white);
+      padding: 9px 20px; border-radius: 8px;
+      font-size: 14px; font-weight: 600; text-decoration: none;
+      transition: background .2s;
+    }
+    .nav-cta:hover { background: var(--primary-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #1d4ed8 100%);
+      color: var(--white);
+      padding: 80px 24px 70px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(245,158,11,0.2);
+      border: 1px solid rgba(245,158,11,0.5);
+      color: #fcd34d;
+      font-size: 13px; font-weight: 600;
+      padding: 5px 16px; border-radius: 20px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: clamp(26px, 5vw, 46px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .hero h1 em {
+      color: #fbbf24; font-style: normal;
+    }
+    .hero p {
+      font-size: clamp(15px, 2vw, 18px);
+      color: #bfdbfe;
+      max-width: 620px; margin: 0 auto 36px;
+      position: relative;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      position: relative;
+    }
+    .btn-primary {
+      background: var(--accent); color: #1a1a1a;
+      padding: 15px 32px; border-radius: 10px;
+      font-size: 16px; font-weight: 700; text-decoration: none;
+      transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 16px rgba(245,158,11,0.4);
+    }
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.12); color: var(--white);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      padding: 15px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 600; text-decoration: none;
+      transition: all .2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+    .hero-note {
+      margin-top: 18px; font-size: 13px; color: #93c5fd;
+      position: relative;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 28px; font-weight: 800; color: var(--primary);
+      line-height: 1;
+    }
+    .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* ── PAIN SECTION ── */
+    .section { padding: 72px 24px; }
+    .section-center { text-align: center; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block;
+      background: var(--primary-light); color: var(--primary);
+      font-size: 12px; font-weight: 700; letter-spacing: .05em;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 800; line-height: 1.25;
+      margin-bottom: 14px;
+    }
+    .subtitle {
+      font-size: 16px; color: var(--muted);
+      max-width: 580px; margin: 0 auto 48px;
+    }
+
+    /* Pain cards */
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .pain-card {
+      background: #fff1f2;
+      border: 1.5px solid #fecdd3;
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .pain-card .icon { font-size: 28px; margin-bottom: 12px; }
+    .pain-card h3 { font-size: 16px; font-weight: 700; color: #9f1239; margin-bottom: 8px; }
+    .pain-card p { font-size: 14px; color: #64748b; }
+
+    /* ── SOLUTION SECTION ── */
+    .solution-section { background: var(--white); }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      transition: all .25s;
+    }
+    .feature-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+    }
+    .feature-icon {
+      width: 52px; height: 52px;
+      background: var(--primary-light);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; margin-bottom: 16px;
+    }
+    .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .feature-badge {
+      display: inline-block; margin-top: 12px;
+      background: #dcfce7; color: var(--green);
+      font-size: 12px; font-weight: 600;
+      padding: 3px 10px; border-radius: 6px;
+    }
+
+    /* ── DEMO SECTION ── */
+    .demo-section { background: #f0f9ff; }
+    .demo-box {
+      background: var(--white);
+      border: 1.5px solid #bae6fd;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(14,165,233,0.12);
+      max-width: 760px; margin: 0 auto;
+    }
+    .demo-header {
+      background: var(--primary);
+      padding: 14px 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .demo-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .demo-body { padding: 28px; }
+    .chat-msg {
+      display: flex; gap: 12px; margin-bottom: 20px; align-items: flex-start;
+    }
+    .chat-msg.user { flex-direction: row-reverse; }
+    .chat-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+      font-weight: 700;
+    }
+    .user .chat-avatar { background: #dbeafe; color: var(--primary); }
+    .ai .chat-avatar { background: var(--primary); color: white; font-size: 14px; }
+    .chat-bubble {
+      max-width: 78%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px; line-height: 1.6;
+    }
+    .user .chat-bubble {
+      background: var(--primary-light); color: var(--primary-dark);
+      border-radius: 12px 2px 12px 12px;
+    }
+    .ai .chat-bubble {
+      background: #f8fafc; color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 2px 12px 12px 12px;
+    }
+    .ai .chat-bubble strong { color: var(--primary); }
+    .chat-time { font-size: 11px; color: var(--muted); margin-top: 5px; }
+
+    /* ── COMPARE TABLE ── */
+    .compare-section { background: var(--white); }
+    .compare-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 14px; max-width: 760px; margin: 0 auto;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .compare-table th {
+      padding: 16px 20px; text-align: center;
+      font-size: 15px; font-weight: 700;
+    }
+    .compare-table th:first-child { text-align: left; background: #f1f5f9; }
+    .compare-table th:nth-child(2) { background: #fef2f2; color: var(--red); }
+    .compare-table th:nth-child(3) { background: var(--primary); color: white; }
+    .compare-table td {
+      padding: 14px 20px; border-top: 1px solid var(--border);
+    }
+    .compare-table td:first-child { font-weight: 600; color: var(--text); }
+    .compare-table td:nth-child(2) { text-align: center; color: var(--red); background: #fff5f5; }
+    .compare-table td:nth-child(3) { text-align: center; color: var(--green); background: #f0fdf4; font-weight: 600; }
+    .compare-table tr:hover td { filter: brightness(0.97); }
+
+    /* ── TESTIMONIALS ── */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .testimonial-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 14px; padding: 24px;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      position: absolute; top: 16px; right: 20px;
+      font-size: 60px; color: var(--primary-light);
+      font-family: Georgia, serif; line-height: 1;
+    }
+    .stars { color: #f59e0b; font-size: 16px; margin-bottom: 12px; }
+    .testimonial-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+    .author { display: flex; align-items: center; gap: 12px; }
+    .author-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 15px; color: white;
+    }
+    .author-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .author-title { font-size: 12px; color: var(--muted); }
+
+    /* ── SECURITY SECTION ── */
+    .security-section { background: #0f172a; color: white; padding: 56px 24px; }
+    .security-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px; margin-top: 40px;
+    }
+    .security-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px; padding: 20px; text-align: center;
+    }
+    .security-card .icon { font-size: 28px; margin-bottom: 10px; }
+    .security-card h4 { font-size: 14px; font-weight: 700; color: #e2e8f0; margin-bottom: 6px; }
+    .security-card p { font-size: 12px; color: #94a3b8; }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background: linear-gradient(135deg, #1e40af, #7c3aed);
+      color: white; text-align: center; padding: 80px 24px;
+    }
+    .cta-section h2 { color: white; margin-bottom: 14px; }
+    .cta-section p { color: #c7d2fe; font-size: 17px; margin-bottom: 36px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .cta-box {
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 16px; padding: 36px;
+      max-width: 480px; margin: 0 auto;
+    }
+    .price-tag {
+      font-size: 13px; color: #a5b4fc; margin-bottom: 8px;
+    }
+    .price {
+      font-size: 42px; font-weight: 800; color: white;
+      margin-bottom: 4px;
+    }
+    .price sub { font-size: 18px; font-weight: 400; }
+    .price-note { font-size: 12px; color: #a5b4fc; margin-bottom: 28px; }
+    .checklist { text-align: left; margin-bottom: 28px; }
+    .checklist li {
+      list-style: none; padding: 6px 0;
+      font-size: 14px; color: #e0e7ff;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .checklist li::before { content: '✓'; color: #34d399; font-weight: 700; }
+    .btn-cta-main {
+      display: block; width: 100%;
+      background: var(--accent); color: #111;
+      padding: 16px; border-radius: 10px;
+      font-size: 16px; font-weight: 700; text-decoration: none;
+      text-align: center; transition: all .2s;
+      box-shadow: 0 4px 16px rgba(245,158,11,0.4);
+    }
+    .btn-cta-main:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .cta-guarantee { margin-top: 14px; font-size: 12px; color: #a5b4fc; }
+
+    /* ── FAQ ── */
+    .faq-section { background: var(--white); }
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .faq-q {
+      font-size: 16px; font-weight: 700; color: var(--text);
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-q::after { content: '+'; font-size: 22px; color: var(--primary); }
+    .faq-a { font-size: 14px; color: var(--muted); margin-top: 12px; line-height: 1.7; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0f172a; color: #94a3b8;
+      padding: 40px 24px; text-align: center;
+    }
+    footer a { color: #60a5fa; text-decoration: none; }
+    footer .footer-logo { font-size: 20px; font-weight: 800; color: white; margin-bottom: 12px; }
+    footer .footer-logo span { color: #fbbf24; }
+    footer p { font-size: 13px; line-height: 1.8; }
+
+    /* ── FLOATING CTA ── */
+    .floating-cta {
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+      background: var(--accent); color: #111;
+      padding: 14px 22px; border-radius: 50px;
+      font-size: 14px; font-weight: 700; text-decoration: none;
+      box-shadow: 0 6px 24px rgba(245,158,11,0.5);
+      display: flex; align-items: center; gap: 8px;
+      animation: pulse 2.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 6px 24px rgba(245,158,11,0.5); }
+      50% { box-shadow: 0 6px 32px rgba(245,158,11,0.8); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .stats-bar { gap: 24px; }
+      .stat-num { font-size: 22px; }
+      .compare-table th, .compare-table td { padding: 10px 12px; font-size: 13px; }
+      .cta-box { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#" class="nav-logo">⚖️ AI <span>Hành Chính</span></a>
+  <a href="#dung-thu" class="nav-cta">Dùng thử miễn phí →</a>
+</nav>
+
+<!-- FLOATING CTA -->
+<a href="https://app.hanhchinh.ai.vn/?ref=AFFILIATE_CODE" class="floating-cta" target="_blank">
+  🚀 Dùng thử 7 ngày miễn phí
+</a>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">⚖️ Dành riêng cho Pháp chế & Kế toán Doanh nghiệp</div>
+    <h1>
+      Tra cứu Luật Việt Nam<br/>
+      <em>chính xác trong 30 giây</em><br/>
+      — không cần Google nữa
+    </h1>
+    <p>
+      AI Hành Chính hiểu nghiệp vụ pháp chế và kế toán. Tóm tắt thông tư, soạn công văn đúng thể thức, đối chiếu quy định — ngay lập tức.
+    </p>
+    <div class="hero-btns">
+      <a href="https://app.hanhchinh.ai.vn/?ref=AFFILIATE_CODE" class="btn-primary" target="_blank">
+        ⚡ Dùng thử 7 ngày miễn phí
+      </a>
+      <a href="#tinh-nang" class="btn-secondary">Xem tính năng ↓</a>
+    </div>
+    <p class="hero-note">✓ Không cần thẻ tín dụng &nbsp;·&nbsp; ✓ Chuẩn Nghị định 30 &nbsp;·&nbsp; ✓ Bảo mật cấp độ 3</p>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">20.000+</div>
+    <div class="stat-label">Cán bộ đang dùng hàng ngày</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">80%</div>
+    <div class="stat-label">Giảm thời gian soạn thảo</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">70%</div>
+    <div class="stat-label">Nhanh hơn khi làm báo cáo</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">Cấp độ 3</div>
+    <div class="stat-label">An toàn thông tin quốc gia</div>
+  </div>
+</div>
+
+<!-- PAIN SECTION -->
+<section class="section section-center">
+  <div class="container">
+    <div class="section-tag">😩 Nỗi đau hàng ngày</div>
+    <h2>Bạn có đang gặp những vấn đề này?</h2>
+    <p class="subtitle">Những công việc tốn thời gian nhất của Pháp chế và Kế toán doanh nghiệp Việt Nam</p>
+
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="icon">🔍</div>
+        <h3>Tìm luật như mò kim đáy bể</h3>
+        <p>Mỗi lần cần tra thông tư, nghị định phải mở 5–7 tab, đọc văn bản dài hàng chục trang chỉ để tìm 1 điều khoản.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">📝</div>
+        <h3>Soạn công văn sai thể thức</h3>
+        <p>Công văn gửi cơ quan nhà nước bị trả lại vì sai lề, sai font, thiếu số hiệu — vừa mất thời gian vừa mất uy tín.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">⏰</div>
+        <h3>Báo cáo định kỳ ngốn cả ngày</h3>
+        <p>Tổng hợp số liệu từ nhiều nguồn, viết lại thành báo cáo — công việc lặp đi lặp lại mỗi tháng không có lối thoát.</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon">⚠️</div>
+        <h3>Sai sót pháp lý = rủi ro lớn</h3>
+        <p>Một điều khoản hợp đồng sai, một thông tư áp dụng nhầm có thể khiến doanh nghiệp chịu phạt nặng hoặc thua kiện.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION/FEATURES -->
+<section class="section solution-section" id="tinh-nang">
+  <div class="container">
+    <div style="text-align:center">
+      <div class="section-tag">✨ Giải pháp</div>
+      <h2>AI Hành Chính làm được gì cho bạn?</h2>
+      <p class="subtitle">Được thiết kế riêng cho nghiệp vụ hành chính Việt Nam — không phải AI nước ngoài chắp vá</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚖️</div>
+        <h3>Tra cứu pháp luật tức thì</h3>
+        <p>Hỏi bằng tiếng Việt tự nhiên, nhận câu trả lời chính xác kèm trích dẫn điều luật cụ thể. Luật Doanh nghiệp, Luật Lao động, Luật Thuế — tất cả trong một nơi.</p>
+        <span class="feature-badge">⏱ Tiết kiệm 3–4 giờ/tuần</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📄</div>
+        <h3>Soạn công văn chuẩn Nghị định 30</h3>
+        <p>Tự động căn chỉnh font chữ, lề trang, tiêu ngữ, số hiệu văn bản đúng quy định. Không bao giờ bị trả lại vì sai thể thức.</p>
+        <span class="feature-badge">✅ Chuẩn 100% theo quy định</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Tổng hợp báo cáo tự động</h3>
+        <p>Nhập dữ liệu thô, AI tổng hợp thành báo cáo định kỳ hoàn chỉnh. Báo cáo tháng, quý, năm — hoàn thành trong 30 phút thay vì cả ngày.</p>
+        <span class="feature-badge">⚡ Nhanh hơn 70%</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🤝</div>
+        <h3>Thẩm định hợp đồng thông minh</h3>
+        <p>Đối chiếu điều khoản hợp đồng với quy định pháp luật hiện hành, phát hiện điều khoản bất lợi hoặc vi phạm luật trước khi ký.</p>
+        <span class="feature-badge">🛡 Giảm rủi ro pháp lý</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>Trợ lý AI cá nhân hóa</h3>
+        <p>Huấn luyện AI theo quy trình nội bộ của công ty bạn. Nó hiểu lĩnh vực kinh doanh, loại hợp đồng và cách làm việc của doanh nghiệp bạn.</p>
+        <span class="feature-badge">🎯 Phù hợp 100% nghiệp vụ</span>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Bảo mật dữ liệu tuyệt đối</h3>
+        <p>Dữ liệu lưu trên server Viettel/VNPT/FPT trong nước. Đạt chuẩn an toàn thông tin cấp độ 3 — tiêu chuẩn cao nhất cho khối nhà nước.</p>
+        <span class="feature-badge">🏅 ISO 27001 certified</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO CHAT -->
+<section class="section demo-section section-center">
+  <div class="container">
+    <div class="section-tag">💬 Thử nghiệm thực tế</div>
+    <h2>Xem AI Hành Chính trả lời câu hỏi pháp lý</h2>
+    <p class="subtitle" style="margin-bottom:36px">Đây là ví dụ thực tế — không phải kịch bản được dàn dựng</p>
+
+    <div class="demo-box">
+      <div class="demo-header">
+        <div class="demo-dot" style="background:#ef4444"></div>
+        <div class="demo-dot" style="background:#f59e0b"></div>
+        <div class="demo-dot" style="background:#22c55e"></div>
+        <span style="color:#93c5fd; font-size:13px; margin-left:8px">AI Hành Chính — Trợ lý Pháp chế</span>
+      </div>
+      <div class="demo-body">
+        <div class="chat-msg user">
+          <div class="chat-avatar">PC</div>
+          <div>
+            <div class="chat-bubble">Theo Luật Lao động hiện hành, doanh nghiệp có được trừ lương nhân viên khi vi phạm nội quy không? Mức trừ tối đa là bao nhiêu?</div>
+            <div class="chat-time" style="text-align:right">Pháp chế · vừa xong</div>
+          </div>
+        </div>
+        <div class="chat-msg ai">
+          <div class="chat-avatar">AI</div>
+          <div>
+            <div class="chat-bubble">
+              Theo <strong>Điều 102, Bộ luật Lao động 2019</strong>, doanh nghiệp <strong>không được khấu trừ lương</strong> của người lao động như một hình thức xử lý kỷ luật.<br/><br/>
+              Tuy nhiên, doanh nghiệp <strong>được phép khấu trừ tiền lương</strong> trong các trường hợp sau:<br/>
+              • Bồi thường thiệt hại do người lao động gây ra (theo Điều 130)<br/>
+              • Mức khấu trừ tối đa <strong>không vượt quá 30%</strong> tiền lương tháng sau khi trích nộp BHXH, BHYT, BHTN và thuế TNCN<br/><br/>
+              ⚠️ Lưu ý: Xử lý kỷ luật lao động chỉ được thực hiện theo các hình thức quy định tại Điều 124 — không bao gồm hình thức phạt tiền hoặc cắt lương.
+            </div>
+            <div class="chat-time">AI Hành Chính · 2 giây</div>
+          </div>
+        </div>
+        <div class="chat-msg user">
+          <div class="chat-avatar">PC</div>
+          <div>
+            <div class="chat-bubble">Soạn cho tôi quyết định xử lý kỷ luật cảnh cáo theo đúng thể thức hành chính</div>
+            <div class="chat-time" style="text-align:right">Pháp chế · vừa xong</div>
+          </div>
+        </div>
+        <div class="chat-msg ai">
+          <div class="chat-avatar">AI</div>
+          <div>
+            <div class="chat-bubble">
+              ✅ Đã tạo <strong>Quyết định xử lý kỷ luật (hình thức Cảnh cáo)</strong> theo chuẩn Nghị định 30/2020/NĐ-CP.<br/><br/>
+              📄 Văn bản gồm đầy đủ: Quốc hiệu - Tiêu ngữ, số hiệu, căn cứ pháp lý (BLLĐ 2019, Nội quy lao động), nội dung quyết định, hiệu lực thi hành và phần ký tên.<br/><br/>
+              💡 Bạn chỉ cần điền tên nhân viên, ngày vi phạm và lý do cụ thể — tôi sẽ hoàn chỉnh ngay.
+            </div>
+            <div class="chat-time">AI Hành Chính · 3 giây</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="section compare-section" id="so-sanh">
+  <div class="container section-center">
+    <div class="section-tag">📊 So sánh</div>
+    <h2>Tại sao không dùng ChatGPT hay Google?</h2>
+    <p class="subtitle" style="margin-bottom:36px">AI nước ngoài không được đào tạo trên hệ thống pháp luật Việt Nam</p>
+
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Tiêu chí</th>
+          <th>ChatGPT / AI nước ngoài</th>
+          <th>✅ AI Hành Chính</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pháp luật Việt Nam</td>
+          <td>❌ Thường sai hoặc lỗi thời</td>
+          <td>✓ Cập nhật Thông tư, Nghị định mới nhất</td>
+        </tr>
+        <tr>
+          <td>Thể thức văn bản</td>
+          <td>❌ Không biết Nghị định 30</td>
+          <td>✓ Chuẩn 100% theo quy định VN</td>
+        </tr>
+        <tr>
+          <td>Bảo mật dữ liệu</td>
+          <td>❌ Server nước ngoài</td>
+          <td>✓ Server trong nước, ISO 27001</td>
+        </tr>
+        <tr>
+          <td>Nghiệp vụ hành chính</td>
+          <td>❌ Không được huấn luyện chuyên sâu</td>
+          <td>✓ Chuyên biệt cho hành chính VN</td>
+        </tr>
+        <tr>
+          <td>Trích dẫn điều luật</td>
+          <td>❌ Hay bịa điều luật không tồn tại</td>
+          <td>✓ Có nguồn gốc, điều khoản rõ ràng</td>
+        </tr>
+        <tr>
+          <td>Phù hợp với cơ quan nhà nước</td>
+          <td>❌ Không được phép dùng</td>
+          <td>✓ Đang triển khai tại 20.000+ cán bộ</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" style="background:#f8fafc">
+  <div class="container section-center">
+    <div class="section-tag">💬 Người dùng nói gì</div>
+    <h2>Đồng nghiệp của bạn đang dùng AI Hành Chính</h2>
+    <p class="subtitle" style="margin-bottom:40px">Phản hồi thực tế từ người làm pháp chế và kế toán</p>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Tính năng tra cứu pháp luật rất thiết thực. Tham khảo các thông tư mới giúp tôi vững vàng hơn khi tham mưu cho lãnh đạo về các vấn đề tư pháp. Không còn phải Google mò từng điều khoản nữa."</p>
+        <div class="author">
+          <div class="author-avatar" style="background:#f59e0b">TH</div>
+          <div>
+            <div class="author-name">Trần Quốc Hưng</div>
+            <div class="author-title">Pháp chế doanh nghiệp · TP.HCM</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Xử lý hồ sơ, hợp đồng có nhiều văn bản đan xen. AI Hành Chính giúp tôi đối chiếu quy định hiệu quả hơn, rút ngắn thời gian thẩm định so với trước đây rất nhiều."</p>
+        <div class="author">
+          <div class="author-avatar" style="background:#1e40af">LH</div>
+          <div>
+            <div class="author-name">Lê Văn Hoàng</div>
+            <div class="author-title">Kế toán trưởng · Đồng Nai</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Trước đây làm báo cáo tổng kết tháng mất cả buổi chiều. Từ ngày có AI Hành Chính, chỉ cần nhập các ý chính, hệ thống tự hoàn thiện văn bản trong vài phút."</p>
+        <div class="author">
+          <div class="author-avatar" style="background:#16a34a">MT</div>
+          <div>
+            <div class="author-name">Nguyễn Minh Tuấn</div>
+            <div class="author-title">Chuyên viên Hành chính · Hà Nội</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECURITY -->
+<section class="security-section section-center">
+  <div class="container">
+    <div style="display:inline-block; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); padding:5px 16px; border-radius:20px; font-size:12px; font-weight:700; color:#fcd34d; margin-bottom:16px; letter-spacing:.05em; text-transform:uppercase;">
+      🛡 Bảo mật & An toàn
+    </div>
+    <h2 style="color:white;">Dữ liệu pháp lý của bạn được bảo vệ tuyệt đối</h2>
+    <p style="color:#94a3b8; font-size:15px; max-width:560px; margin:0 auto;">
+      Tiêu chuẩn bảo mật cấp cao nhất — đủ điều kiện để triển khai trong cơ quan nhà nước
+    </p>
+    <div class="security-grid">
+      <div class="security-card">
+        <div class="icon">🏛</div>
+        <h4>An toàn thông tin Cấp độ 3</h4>
+        <p>Theo Nghị định 85/2016/NĐ-CP và Thông tư 12/2022/TT-BTTTT</p>
+      </div>
+      <div class="security-card">
+        <div class="icon">🔐</div>
+        <h4>ISO 27001 & 27017</h4>
+        <p>Chuẩn quốc tế về an toàn thông tin và bảo mật đám mây</p>
+      </div>
+      <div class="security-card">
+        <div class="icon">🏗</div>
+        <h4>Server trong nước</h4>
+        <p>Viettel IDC · VNPT · FPT — TIA-942 Rated 3</p>
+      </div>
+      <div class="security-card">
+        <div class="icon">💳</div>
+        <h4>PCI DSS</h4>
+        <p>Bảo mật thanh toán cấp cao nhất theo chuẩn quốc tế</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section" id="dung-thu">
+  <div class="container">
+    <h2>Bắt đầu ngay hôm nay — miễn phí 7 ngày</h2>
+    <p>Không cần thẻ tín dụng. Không cần cài đặt. Dùng được ngay trên trình duyệt.</p>
+
+    <div class="cta-box">
+      <div class="price-tag">Gói cá nhân — Pháp chế & Kế toán</div>
+      <div class="price">Miễn phí<sub> 7 ngày</sub></div>
+      <div class="price-note">Sau đó chỉ từ vài trăm nghìn/tháng</div>
+      <ul class="checklist">
+        <li>Tra cứu pháp luật không giới hạn</li>
+        <li>Soạn văn bản chuẩn Nghị định 30</li>
+        <li>Trợ lý báo cáo tổng hợp</li>
+        <li>Kho 10.000+ biểu mẫu văn bản</li>
+        <li>Bảo mật dữ liệu cấp độ 3</li>
+        <li>Hỗ trợ kỹ thuật 24/7</li>
+      </ul>
+      <a href="https://app.hanhchinh.ai.vn/?ref=AFFILIATE_CODE" class="btn-cta-main" target="_blank">
+        ⚡ Đăng ký dùng thử miễn phí ngay
+      </a>
+      <div class="cta-guarantee">🔒 Cam kết bảo mật · Hủy bất kỳ lúc nào · Không ràng buộc</div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section faq-section">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:40px">
+      <div class="section-tag">❓ Câu hỏi thường gặp</div>
+      <h2>Giải đáp thắc mắc</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">AI Hành Chính có phù hợp với nhân viên pháp chế tư nhân không?</div>
+        <div class="faq-a">Hoàn toàn phù hợp. Hệ thống được thiết kế cho cả khối nhà nước và doanh nghiệp tư nhân. Pháp chế doanh nghiệp, công ty luật, tư vấn kế toán đều có thể sử dụng để tra cứu luật Việt Nam, soạn công văn gửi cơ quan nhà nước và thẩm định hợp đồng.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Dữ liệu pháp luật có được cập nhật thường xuyên không?</div>
+        <div class="faq-a">Có. Đội ngũ kỹ thuật cập nhật văn bản quy phạm pháp luật liên tục, bao gồm Thông tư, Nghị định, Quyết định mới nhất của các Bộ ngành. Bạn luôn làm việc với dữ liệu pháp lý hiện hành.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Thông tin hợp đồng và dữ liệu công ty tôi có bị lộ không?</div>
+        <div class="faq-a">Không. Dữ liệu của bạn được lưu trữ tại server trong nước (Viettel IDC, VNPT, FPT), được mã hóa và tuân thủ tiêu chuẩn ISO 27001. Chúng tôi không sử dụng dữ liệu của bạn để huấn luyện AI chung.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Tôi có thể dùng trên điện thoại không?</div>
+        <div class="faq-a">Có. Giao diện web responsive, dùng được trên mọi thiết bị — máy tính, tablet, điện thoại — không cần cài đặt ứng dụng.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Sau 7 ngày dùng thử, phí là bao nhiêu?</div>
+        <div class="faq-a">Chi tiết gói phí hiển thị trong tài khoản sau khi đăng ký. Bạn có thể hủy bất kỳ lúc nào trước khi hết thời gian dùng thử mà không bị tính phí.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">⚖️ AI <span>Hành Chính</span></div>
+  <p>
+    Văn phòng AI chuyên dụng cho khối hành chính Việt Nam<br/>
+    Phát triển bởi <a href="https://digiso.vn" target="_blank">DIGISO</a> & Viện AiOV<br/><br/>
+    <a href="https://hanhchinh.ai.vn" target="_blank">hanhchinh.ai.vn</a> &nbsp;·&nbsp;
+    Hotline: <a href="tel:+84877909606">0877 909 606</a> &nbsp;·&nbsp;
+    <a href="mailto:info@digiso.vn">info@digiso.vn</a><br/><br/>
+    <small>Trang này sử dụng link affiliate. Khi bạn đăng ký qua link, chúng tôi nhận hoa hồng từ AI Hành Chính mà không ảnh hưởng đến giá bạn trả.</small>
+  </p>
+</footer>
+
+</body>
+</html>
